@@ -46,10 +46,10 @@ function parse(networkTmp) {
 
     network.mac = networkTmp[4] && networkTmp[4].match(/.*?:\s(.*)/)[1];
     network.bssid = network.mac;
-    network.ssid = networkTmp[0].match(/.*?:\s(.*)/)[1];
-    network.channel = parseInt(networkTmp[7].match(/.*?:\s(.*)/)[1]);
-    network.frequency = parseInt(networkUtils.frequencyFromChannel(network.channel));
-    network.signal_level = networkUtils.dBFromQuality(networkTmp[5].match(/.*?:\s(.*)/)[1]);
+    network.ssid = networkTmp[0] && networkTmp[0].match(/.*?:\s(.*)/)[1];
+    network.channel = networkTmp[7] && parseInt(networkTmp[7].match(/.*?:\s(.*)/)[1]);
+    network.frequency = network.channel && parseInt(networkUtils.frequencyFromChannel(network.channel));
+    network.signal_level = networkTmp[5] && networkUtils.dBFromQuality(networkTmp[5].match(/.*?:\s(.*)/)[1]);
     network.security = networkTmp[2] && networkTmp[2].match(/.*?:\s(.*)/)[1];
     network.security_flags = networkTmp[3] && networkTmp[3].match(/.*?:\s(.*)/)[1];
     network.mode = 'Unknown';
